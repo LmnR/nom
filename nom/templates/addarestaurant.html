@@ -1,0 +1,40 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<body>
+<div style="margin-left: 2%; margin-top: 2%">
+
+  <h1>Add a Restaurant</h1>
+  <div class="well well-sm" style="width: 25%">
+  <form action = "http://localhost:8111/addrestaurant" method = "post">
+    
+  <div style="margin-top: 2%; margin-left: 2%">
+    <p>Restaurant Name: <input type = "text" name = "nm" /></p>
+    <p>Opening Time:    <input type = "text" name = "op" /></p>
+    <p>Closing Time:    <input type = "text" name = "ct" /></p>
+    <p>Cuisine:         <input type = "text" name = "cat" /></p>
+    <p>Waiting Time:    <input type = "text" name = "wt" /></p>
+    <p>Price:           <input type = "text" name = "pr" /></p>
+
+    <p>Street: <input type = "text" name = "str" /></p>
+    <p>City:    <input type = "text" name = "cty" /></p>
+    <p>State:    <input type = "text" name = "sta" /></p>
+    <p>Country:         <input type = "text" name = "cou" /></p>
+    <p>Zip:     <input type = "text" name = "zip" /></p>
+
+    <input type = "submit" value = "Add Restaurant" class="btn btn-primary"/>
+    <a href="/allrestaurant" class="btn btn-danger" style="display: inline-block">Back</a>
+  </div>
+  </form>
+  </div>
+</div>
+</body>
+
+
+</html>

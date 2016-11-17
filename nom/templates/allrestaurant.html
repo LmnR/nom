@@ -1,0 +1,53 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<body>
+  <div style="margin-left: 2%; margin-top: 2%">
+  <h1>All Restaurants</h1>
+
+
+<!--   <div>
+    {% for n in data %}
+    <div>{{n}}<p><a href="/menu/{{n}}">Menu</a></p></div>
+    {% endfor %}
+  </div> -->
+
+  <div>
+    <table class="table table-striped" style="width: 25%">
+
+    <thead>
+      <tr>
+        <th>Restaurant</th>
+        <th>Menu</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in data %}
+      <tr>
+        <td><p><strong style="font-style: italic;">{{n[0]}}</strong></p>
+            <p>{{n[1]}}</p>
+            <p>{{n[2]}}</p>
+
+        </td>
+        <td><a class="btn btn-info" href="/menu/{{n[0]}}">Menu</a></td>
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+    
+    </table>
+  </div>
+
+  <a class="btn btn-primary" href="/addarestaurant">Add a Restaurant</a>
+  <a href="/" class="btn btn-danger" style="display: inline-block">Back</a>
+  </div>
+</body>
+
+
+</html>

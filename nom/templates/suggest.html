@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<div style="margin: auto; margin-top: 15%;width: 40%">
+<h1> NOM suggests these restaurants! </h1>
+<div class="well well-lg">
+<!--     {% for n in info %}
+    <div>{{n}}<p><a href="/menu/{{n}}">Show Menu</a></p>
+    </div>
+
+
+    {% endfor %}
+ -->
+    <div>
+    <table class="table table-striped">
+
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for n in info %}
+      <tr>
+        <td>{{n}}</td>
+        <td><a class="btn btn-info" href="/menu/{{n}}">Menu</a></td>
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+    
+    </table>
+  </div>
+</div>
+
+
+<div style="margin: auto">
+<a class="btn btn-primary" href="/search">Search Again</a>
+<a class="btn btn-danger" href="/">Back to Home</a>
+</div>
+
+</div>
