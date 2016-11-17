@@ -290,8 +290,8 @@ def addrestaurant():
   try:
     cid = g.conn.execute(" select cid from categorys where cname = %s", category).first()['cid']
 
-    restcat = 'INSERT INTO restaurantcategory values ((:cid), (:cat), (:wait), (:pr))'
-    g.conn.execute(text(restcat), cid = int(cid), cat = category, wait = waiting, pr = price)
+    restcat = 'INSERT INTO restaurantcategory values ((:cid), (:cat), (:wait), (:pr), (:id))'
+    g.conn.execute(text(restcat), cid = int(cid), cat = category, wait = waiting, pr = price, id = id)
   except TypeError: 
     newcid = int(g.conn.execute("select last_value from cat_id_seq").first()['last_value'])
 
@@ -301,8 +301,8 @@ def addrestaurant():
 
     g.conn.execute(text(cat), cid = newcid, cname = category)
 
-    restcat = 'INSERT INTO restaurantcategory values ((:cid), (:cat), (:wait), (:pr))'
-    g.conn.execute(text(restcat), cid = newcid, cat = category, wait = waiting, pr = price)
+    restcat = 'INSERT INTO restaurantcategory values ((:cid), (:cat), (:wait), (:pr), (:id))'
+    g.conn.execute(text(restcat), cid = newcid, cat = category, wait = waiting, pr = price, id = id)
 
     
 
@@ -449,6 +449,52 @@ def suggest():
   context = dict(info = info)
 
   return render_template("suggest.html", **context)
+
+@app.route('/order/<restaurant>', methods = ['POST'])
+def order(restaurant):
+  uname = check(request.form['us'])
+  password = check(request.form['ps'])
+  print (uname)
+  print(password)
+  if uname == None or password == None:
+    context = "/menu/" + restaurant
+    return render_template("error.html", url = context)
+
+  try:
+    uid = g.conn.execute(" select uid from users where email = %s and password = %s", uname, password).first()['uid']
+    rid = g.conn.execute(" select restaurantid from restaurant where name = %s", restaurant).first()['restaurantid']
+    print(rid)
+    print(uid)
+
+    # try:
+    print("inner try")
+    g.conn.execute("update userhistory set timespicked = (timespicked + 1) where uid = %s and restaurantid = %s", int(uid), int(rid))
+    cur = g.conn.execute("select * from userhistory where uid = %s and restaurantid = %s", int(uid), int(rid))
+    # for result in cur:
+    #   print(result)
+    # except TypeError:
+    #   print("inner except")
+    #   g.conn.execute("Insert into userhistory values (%s, %s, 1)", int(uid), int(rid))
+    #   cur = g.conn.execute("select * from userhistory where uid = %s and restaurantid = %s", int(uid), int(rid))
+
+    names = []
+    # names.append['Thank you for order!']
+
+
+    for result in cur:
+      print(result)
+      names.append([result[0], str(result[2])])
+
+    cur.close()
+
+    context = dict(data = names)
+ 
+    return render_template("userhistory.html", **context)
+
+  except TypeError:
+    print("type error")
+    context = "/menu/" + restaurant
+    return render_template("error.html", url=context)
 
 
 if __name__ == "__main__":

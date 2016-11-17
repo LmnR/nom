@@ -31,7 +31,18 @@
       </tr>
       {% endfor %}
       
-    </tbody>
+
+    <form action = "/order/{{rest}}" method = "post" style="margin-top: 2%; margin-left: 5%">
+      <h3>Place Order:</h3>
+      <p>E-mail: <input type = "text" name = "us" /></p>
+      <p>Password: <input type = "text" name = "ps" /></p>
+      <div style="margin-top: 1%">
+      <input type = "submit" value = "Order" class="btn btn-primary" style="display: inline-block"/>
+      <a href="/allrestaurant" class="btn btn-danger" style="display: inline-block">Back</a>
+      </div>
+    </form>
+
+    
     
     </table>
   </div>
