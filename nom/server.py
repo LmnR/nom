@@ -348,7 +348,8 @@ def userinfo():
   password = check(request.form['ps'])
 
   if uname == None or password == None:
-    return render_template("error.html")
+    context = "/checkhistory"
+    return render_template("error.html", url = context)
 
   print(uname + " " + password)
 
@@ -371,8 +372,9 @@ def userinfo():
     return render_template("userhistory.html", **context)
 
   except TypeError:
+    context = "/checkhistory"
 
-    return render_template("error.html")
+    return render_template("error.html", url = context)
 
 
 
@@ -435,8 +437,8 @@ def suggest():
   
   print(lowbound)
   print(price)
-  hour = 15
-  # hour = hour + float(time.strftime("%H")) + float(time.strftime("%M")) / 60
+  # hour = 15
+  hour = hour + float(time.strftime("%H")) + float(time.strftime("%M")) / 60
   
   
 
@@ -466,16 +468,19 @@ def order(restaurant):
     print(rid)
     print(uid)
 
-    # try:
     print("inner try")
-    g.conn.execute("update userhistory set timespicked = (timespicked + 1) where uid = %s and restaurantid = %s", int(uid), int(rid))
-    cur = g.conn.execute("select * from userhistory where uid = %s and restaurantid = %s", int(uid), int(rid))
-    # for result in cur:
-    #   print(result)
-    # except TypeError:
-    #   print("inner except")
-    #   g.conn.execute("Insert into userhistory values (%s, %s, 1)", int(uid), int(rid))
-    #   cur = g.conn.execute("select * from userhistory where uid = %s and restaurantid = %s", int(uid), int(rid))
+    x = g.conn.execute("select * from userhistory where uid = %s and restaurantid = %s", int(uid), int(rid)).first()
+
+    if x != None: 
+      g.conn.execute("update userhistory set timespicked = (timespicked + 1) where uid = %s and restaurantid = %s", int(uid), int(rid))
+      #cur = g.conn.execute("select * from userhistory where uid = %s and restaurantid = %s", int(uid), int(rid))
+
+    else:
+       g.conn.execute("Insert into userhistory values (%s, %s, 1)", int(uid), int(rid))
+
+
+
+    cur = g.conn.execute("select r.name, u.timespicked from userhistory u, restaurant r where (u.restaurantid = r.restaurantid and u.uid = %s and u.restaurantid = %s)", int(uid), int(rid))
 
     names = []
     # names.append['Thank you for order!']
@@ -483,7 +488,7 @@ def order(restaurant):
 
     for result in cur:
       print(result)
-      names.append([result[0], str(result[2])])
+      names.append([result[0], str(result[1])])
 
     cur.close()
 
